@@ -1,3 +1,4 @@
+import haxe.ds.ObjectMap;
 import classes.ArrayProperty;
 import classes.ClassProperty;
 import classes.BoolProperty;
