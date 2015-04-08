@@ -1,3 +1,4 @@
+import haxe.ds.StringMap;
 class Cloner {
 
     public function new():Void {}
@@ -11,6 +12,14 @@ class Cloner {
             for (i in 0...array.length)
                 array[i] = clone(array[i]);
             return array;
+        }
+        else if(Std.is(inValue,StringMap)) {
+            var inMap:Map<String,Dynamic> = cast inValue;
+            var map:Map<String,Dynamic> = new Map<String,Dynamic>();
+            for (key in inMap.keys()) {
+                map.set(key, inMap.get(key));
+            }
+            return map;
         }
         else
             return cloneClass(inValue);
