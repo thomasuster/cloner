@@ -1,3 +1,4 @@
+import classes.ArrayProperty;
 import classes.ClassProperty;
 import classes.BoolProperty;
 import classes.NullClass;
@@ -9,7 +10,7 @@ class TestCloner extends haxe.unit.TestCase {
         cloner = new Cloner();
     }
 
-    public function testClondeClass() {
+    public function testCloneClass() {
         var value:NullClass = new NullClass();
         assertTrue(cloner.cloneClass(value) != null);
     }
@@ -17,6 +18,11 @@ class TestCloner extends haxe.unit.TestCase {
     public function testBoolProperty() {
         var value:BoolProperty = new BoolProperty(true);
         assertTrue(cloner.cloneClass(value).property);
+    }
+
+    public function testArrayProperty() {
+        var value:ArrayProperty = new ArrayProperty([true]);
+        assertTrue(cloner.cloneClass(value).property[0]);
     }
 
     public function testClassProperty():Void {

@@ -5,6 +5,13 @@ class Cloner {
     public function clone(inValue:Dynamic):Dynamic {
         if(!Reflect.isObject(inValue))
             return inValue;
+        else if(Std.is(inValue,Array)) {
+            var inArray:Array<Dynamic> = inValue;
+            var array:Array<Dynamic> = inArray.copy();
+            for (i in 0...array.length)
+                array[i] = clone(array[i]);
+            return array;
+        }
         else
             return cloneClass(inValue);
     }
