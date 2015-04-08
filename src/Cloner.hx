@@ -1,3 +1,4 @@
+import haxe.ds.IntMap;
 import haxe.ds.StringMap;
 class Cloner {
 
@@ -16,6 +17,14 @@ class Cloner {
         else if(Std.is(inValue,StringMap)) {
             var inMap:Map<String,Dynamic> = cast inValue;
             var map:Map<String,Dynamic> = new Map<String,Dynamic>();
+            for (key in inMap.keys()) {
+                map.set(key, inMap.get(key));
+            }
+            return map;
+        }
+        else if(Std.is(inValue,IntMap)) {
+            var inMap:IntMap<Dynamic> = cast inValue;
+            var map:IntMap<Dynamic> = new IntMap<Dynamic>();
             for (key in inMap.keys()) {
                 map.set(key, inMap.get(key));
             }

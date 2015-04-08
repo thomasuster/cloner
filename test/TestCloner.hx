@@ -31,6 +31,13 @@ class TestCloner extends haxe.unit.TestCase {
         assertTrue(cloner.clone(value).get('you') == 1);
     }
 
+    @Test
+    public function testIntMap():Void {
+        var value:Map<Int, Int> = new Map<Int, Int>();
+        value.set(1,2);
+        assertTrue(cloner.clone(value).get(1) == 2);
+    }
+
     public function testClassProperty():Void {
         var value:ClassProperty = new ClassProperty();
         var inValue = new BoolProperty(true);
