@@ -42,7 +42,7 @@ class Cloner {
         return array;
     }
 
-    public function cloneClass <T> (inValue:T):T {
+    function cloneClass <T> (inValue:T):T {
         var outValue:T = Type.createEmptyInstance(Type.getClass(inValue));
         var fields:Array<String> = Reflect.fields(inValue);
         for (i in 0...fields.length) {

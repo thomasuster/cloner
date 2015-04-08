@@ -10,19 +10,19 @@ class TestCloner extends haxe.unit.TestCase {
         cloner = new Cloner();
     }
 
-    public function testCloneClass() {
+    public function testclone() {
         var value:NullClass = new NullClass();
-        assertTrue(cloner.cloneClass(value) != null);
+        assertTrue(cloner.clone(value) != null);
     }
 
     public function testBoolProperty() {
         var value:BoolProperty = new BoolProperty(true);
-        assertTrue(cloner.cloneClass(value).property);
+        assertTrue(cloner.clone(value).property);
     }
 
     public function testArrayProperty() {
         var value:ArrayProperty = new ArrayProperty([true]);
-        assertTrue(cloner.cloneClass(value).property[0]);
+        assertTrue(cloner.clone(value).property[0]);
     }
 
     public function testStringMap():Void {
@@ -42,7 +42,7 @@ class TestCloner extends haxe.unit.TestCase {
         var value:ClassProperty = new ClassProperty();
         var inValue = new BoolProperty(true);
         value.property = inValue;
-        var outValue:BoolProperty = cloner.cloneClass(value).property;
+        var outValue:BoolProperty = cloner.clone(value).property;
         assertTrue(outValue.property);
         assertFalse(inValue == outValue);
     }
