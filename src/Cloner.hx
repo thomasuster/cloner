@@ -13,11 +13,7 @@ class Cloner {
         if(!Reflect.isObject(inValue))
             return inValue;
         else if(Std.is(inValue,Array)) {
-            var inArray:Array<Dynamic> = inValue;
-            var array:Array<Dynamic> = inArray.copy();
-            for (i in 0...array.length)
-                array[i] = clone(array[i]);
-            return array;
+            return cloneArray(inValue);
         }
         else if(Std.is(inValue,StringMap)) {
             return cloneMap(inValue, StringMap);
@@ -36,6 +32,14 @@ class Cloner {
             map.set(key, inMap.get(key));
         }
         return map;
+    }
+
+    function cloneArray(inValue:Array<Dynamic>):Dynamic {
+        var inArray:Array<Dynamic> = inValue;
+        var array:Array<Dynamic> = inArray.copy();
+        for (i in 0...array.length)
+            array[i] = clone(array[i]);
+        return array;
     }
 
     public function cloneClass <T> (inValue:T):T {
