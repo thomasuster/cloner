@@ -1,0 +1,1 @@
+[![TravisCI Build Status](https://travis-ci.org/thomasuster/haxe-ios-travis.svg?branch=master)](https://travis-ci.org/thomasuster/haxe-ios-travis)
