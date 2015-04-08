@@ -1,3 +1,4 @@
+package cloner;
 import Map.IMap;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
