@@ -1,8 +1,13 @@
+import Map.IMap;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
 class Cloner {
 
-    public function new():Void {}
+    var noArgs:Array<Dynamic>;
+
+    public function new():Void {
+        noArgs = [];
+    }
 
     public function clone(inValue:Dynamic):Dynamic {
         if(!Reflect.isObject(inValue))
@@ -15,23 +20,22 @@ class Cloner {
             return array;
         }
         else if(Std.is(inValue,StringMap)) {
-            var inMap:Map<String,Dynamic> = cast inValue;
-            var map:Map<String,Dynamic> = new Map<String,Dynamic>();
-            for (key in inMap.keys()) {
-                map.set(key, inMap.get(key));
-            }
-            return map;
+            return cloneMap(inValue, StringMap);
         }
         else if(Std.is(inValue,IntMap)) {
-            var inMap:IntMap<Dynamic> = cast inValue;
-            var map:IntMap<Dynamic> = new IntMap<Dynamic>();
-            for (key in inMap.keys()) {
-                map.set(key, inMap.get(key));
-            }
-            return map;
+            return cloneMap(inValue, IntMap);
         }
         else
             return cloneClass(inValue);
+    }
+
+    function cloneMap <K,Dynamic> (inValue:IMap<K,Dynamic>, type:Class<IMap<K,Dynamic>>):IMap<K,Dynamic> {
+        var inMap:IMap<K,Dynamic> = inValue;
+        var map:IMap<K,Dynamic> = Type.createInstance(type, noArgs);
+        for (key in inMap.keys()) {
+            map.set(key, inMap.get(key));
+        }
+        return map;
     }
 
     public function cloneClass <T> (inValue:T):T {
