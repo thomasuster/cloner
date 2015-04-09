@@ -12,10 +12,16 @@ class Cloner {
 
     public function new():Void {
         noArgs = [];
-        cache = new ObjectMap<Dynamic,Dynamic>();
     }
 
     public function clone(v:Dynamic):Dynamic {
+        cache = new ObjectMap<Dynamic,Dynamic>();
+        var outcome:Dynamic = _clone(v);
+        cache = null;
+        return outcome;
+    }
+
+    function _clone(v:Dynamic):Dynamic {
         switch(Type.typeof(v)){
             case TNull:
                 return null;
@@ -57,7 +63,7 @@ class Cloner {
         var inMap:IMap<K,Dynamic> = inValue;
         var map:IMap<K,Dynamic> = Type.createInstance(type, noArgs);
         for (key in inMap.keys()) {
-            map.set(key, inMap.get(key));
+            map.set(key, inMap.get(key)); //clone this
         }
         return map;
     }
@@ -66,7 +72,7 @@ class Cloner {
         var inArray:Array<Dynamic> = inValue;
         var array:Array<Dynamic> = inArray.copy();
         for (i in 0...array.length)
-            array[i] = clone(array[i]);
+            array[i] = _clone(array[i]);
         return array;
     }
 
@@ -76,7 +82,7 @@ class Cloner {
         for (i in 0...fields.length) {
             var field = fields[i];
             var property = Reflect.getProperty(inValue, field);
-            Reflect.setField(outValue, field, clone(property));
+            Reflect.setField(outValue, field, _clone(property));
         }
         return outValue;
     }

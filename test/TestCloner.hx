@@ -51,17 +51,6 @@ class TestCloner extends haxe.unit.TestCase {
         assertTrue(cloner.clone(ABCEnum.b) == ABCEnum.b);
     }
 
-    public function testReferences():Void {
-        var a:ClassProperty = new ClassProperty();
-        var b:ClassProperty = new ClassProperty();
-        var c:BoolProperty = new BoolProperty();
-        a.property = c;
-        b.property = c;
-        var input = [a, b];
-        var outcome:Array<ClassProperty> = cloner.clone(input);
-        assertTrue(outcome[0].property == outcome[1].property);
-    }
-
     public function testClassProperty():Void {
         var value:ClassProperty = new ClassProperty();
         var inValue = new BoolProperty(true);
