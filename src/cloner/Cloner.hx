@@ -2,16 +2,29 @@ package cloner;
 import haxe.ds.ObjectMap;
 import haxe.Serializer;
 import Type.ValueType;
-import Map.IMap;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
 class Cloner {
 
     var noArgs:Array<Dynamic>;
     var cache:ObjectMap<Dynamic,Dynamic>;
+    var classHandles:Map<String,Dynamic->Dynamic>;
+    var stringMapCloner:MapCloner<String>;
+    var intMapCloner:MapCloner<Int>;
 
     public function new():Void {
         noArgs = [];
+        stringMapCloner = new MapCloner(this,StringMap);
+        intMapCloner = new MapCloner(this,IntMap);
+        classHandles = new Map<String,Dynamic->Dynamic>();
+        classHandles.set('String',returnValue);
+        classHandles.set('Array',cloneArray);
+        classHandles.set('haxe.ds.StringMap',stringMapCloner.clone);
+        classHandles.set('haxe.ds.IntMap',intMapCloner.clone);
+    }
+
+    function returnValue(v:Dynamic):Dynamic {
+        return v;
     }
 
     public function clone(v:Dynamic):Dynamic {
@@ -21,7 +34,7 @@ class Cloner {
         return outcome;
     }
 
-    function _clone(v:Dynamic):Dynamic {
+    public function _clone(v:Dynamic):Dynamic {
         switch(Type.typeof(v)){
             case TNull:
                 return null;
@@ -47,25 +60,10 @@ class Cloner {
     }
 
     function handleClass(c:Class<Dynamic>,inValue:Dynamic):Dynamic {
-        var name = Type.getClassName(c);
-        if(name == 'String')
-            return inValue;
-        if(name == 'Array')
-            return cloneArray(inValue);
-        if(name == 'haxe.ds.StringMap')
-            return cloneMap(inValue, StringMap);
-        else if(name == 'haxe.ds.IntMap')
-            return cloneMap(inValue, IntMap);
-        return cloneClass(inValue);
-    }
-
-    function cloneMap <K,Dynamic> (inValue:IMap<K,Dynamic>, type:Class<IMap<K,Dynamic>>):IMap<K,Dynamic> {
-        var inMap:IMap<K,Dynamic> = inValue;
-        var map:IMap<K,Dynamic> = Type.createInstance(type, noArgs);
-        for (key in inMap.keys()) {
-            map.set(key, _clone(inMap.get(key)));
-        }
-        return map;
+        var handle:Dynamic->Dynamic = classHandles.get(Type.getClassName(c));
+        if(handle == null)
+            handle = cloneClass;
+        return handle(inValue);
     }
 
     function cloneArray(inValue:Array<Dynamic>):Dynamic {
