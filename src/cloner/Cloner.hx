@@ -63,7 +63,7 @@ class Cloner {
         var inMap:IMap<K,Dynamic> = inValue;
         var map:IMap<K,Dynamic> = Type.createInstance(type, noArgs);
         for (key in inMap.keys()) {
-            map.set(key, inMap.get(key)); //clone this
+            map.set(key, _clone(inMap.get(key)));
         }
         return map;
     }

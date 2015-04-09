@@ -39,6 +39,13 @@ class TestCloner extends haxe.unit.TestCase {
         assertTrue(cloner.clone(value).get(1) == 2);
     }
 
+    public function testObjectsInMap():Void {
+        var value:Map<Int, NullClass> = new Map<Int, NullClass>();
+        var v:NullClass = new NullClass();
+        value.set(1,v);
+        assertTrue(cloner.clone(value).get(1) != v);
+    }
+
     public function testString():Void {
         assertTrue(cloner.clone('a') == 'a');
     }
