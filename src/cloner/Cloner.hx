@@ -1,4 +1,5 @@
 package cloner;
+import haxe.ds.ObjectMap;
 import haxe.Serializer;
 import Type.ValueType;
 import Map.IMap;
@@ -7,29 +8,33 @@ import haxe.ds.StringMap;
 class Cloner {
 
     var noArgs:Array<Dynamic>;
+    var cache:ObjectMap<Dynamic,Dynamic>;
 
     public function new():Void {
         noArgs = [];
+        cache = new ObjectMap<Dynamic,Dynamic>();
     }
 
-    public function clone(inValue:Dynamic):Dynamic {
-        switch(Type.typeof(inValue)){
+    public function clone(v:Dynamic):Dynamic {
+        switch(Type.typeof(v)){
             case TNull:
                 return null;
             case TInt:
-                return inValue;
+                return v;
             case TFloat:
-                return inValue;
+                return v;
             case TBool:
-                return inValue;
+                return v;
             case TObject:
-                return inValue;
+                return v;
             case TFunction:
                 return null;
             case TClass(c):
-                return handleClass(c, inValue);
+                if(!cache.exists(v))
+                    cache.set(v,handleClass(c, v));
+                return cache.get(v);
             case TEnum(e):
-                return inValue;
+                return v;
             case TUnknown:
                 return null;
         }

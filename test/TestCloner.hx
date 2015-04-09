@@ -33,26 +33,33 @@ class TestCloner extends haxe.unit.TestCase {
         assertTrue(cloner.clone(value).get('you') == 1);
     }
 
-    @Test
     public function testIntMap():Void {
         var value:Map<Int, Int> = new Map<Int, Int>();
         value.set(1,2);
         assertTrue(cloner.clone(value).get(1) == 2);
     }
 
-    @Test
     public function testString():Void {
         assertTrue(cloner.clone('a') == 'a');
     }
 
-    @Test
     public function testClassType():Void {
         assertTrue(cloner.clone(NullClass) == NullClass);
     }
 
-    @Test
     public function testEnum():Void {
         assertTrue(cloner.clone(ABCEnum.b) == ABCEnum.b);
+    }
+
+    public function testReferences():Void {
+        var a:ClassProperty = new ClassProperty();
+        var b:ClassProperty = new ClassProperty();
+        var c:BoolProperty = new BoolProperty();
+        a.property = c;
+        b.property = c;
+        var input = [a, b];
+        var outcome:Array<ClassProperty> = cloner.clone(input);
+        assertTrue(outcome[0].property == outcome[1].property);
     }
 
     public function testClassProperty():Void {
