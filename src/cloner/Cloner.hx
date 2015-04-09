@@ -23,13 +23,13 @@ class Cloner {
             case TBool:
                 return inValue;
             case TObject:
-                return null;
+                return inValue;
             case TFunction:
                 return null;
             case TClass(c):
                 return handleClass(c, inValue);
             case TEnum(e):
-                return null;
+                return inValue;
             case TUnknown:
                 return null;
         }

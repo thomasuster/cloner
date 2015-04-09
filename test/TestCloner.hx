@@ -1,3 +1,4 @@
+import classes.ABCEnum;
 import cloner.Cloner;
 import classes.ArrayProperty;
 import classes.ClassProperty;
@@ -42,6 +43,16 @@ class TestCloner extends haxe.unit.TestCase {
     @Test
     public function testString():Void {
         assertTrue(cloner.clone('a') == 'a');
+    }
+
+    @Test
+    public function testClassType():Void {
+        assertTrue(cloner.clone(NullClass) == NullClass);
+    }
+
+    @Test
+    public function testEnum():Void {
+        assertTrue(cloner.clone(ABCEnum.b) == ABCEnum.b);
     }
 
     public function testClassProperty():Void {
