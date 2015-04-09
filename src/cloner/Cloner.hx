@@ -1,4 +1,6 @@
 package cloner;
+import haxe.Serializer;
+import Type.ValueType;
 import Map.IMap;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
@@ -11,19 +13,37 @@ class Cloner {
     }
 
     public function clone(inValue:Dynamic):Dynamic {
-        if(!Reflect.isObject(inValue))
-            return inValue;
-        else if(Std.is(inValue,Array)) {
+        if(Std.is(inValue,Array))
             return cloneArray(inValue);
+        switch(Type.typeof(inValue)){
+            case TNull:
+                return null;
+            case TInt:
+                return inValue;
+            case TFloat:
+                return inValue;
+            case TBool:
+                return inValue;
+            case TObject:
+                return null;
+            case TFunction:
+                return null;
+            case TClass(c):
+                return handleClass(c, inValue);
+            case TEnum(e):
+                return null;
+            case TUnknown:
+                return null;
         }
-        else if(Std.is(inValue,StringMap)) {
+    }
+
+    function handleClass(c:Class<Dynamic>,inValue:Dynamic):Dynamic {
+        var name = Type.getClassName(c);
+        if(name == 'haxe.ds.StringMap')
             return cloneMap(inValue, StringMap);
-        }
-        else if(Std.is(inValue,IntMap)) {
+        else if(name == 'haxe.ds.IntMap')
             return cloneMap(inValue, IntMap);
-        }
-        else
-            return cloneClass(inValue);
+        return cloneClass(inValue);
     }
 
     function cloneMap <K,Dynamic> (inValue:IMap<K,Dynamic>, type:Class<IMap<K,Dynamic>>):IMap<K,Dynamic> {
