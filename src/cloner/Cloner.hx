@@ -13,8 +13,6 @@ class Cloner {
     }
 
     public function clone(inValue:Dynamic):Dynamic {
-        if(Std.is(inValue,Array))
-            return cloneArray(inValue);
         switch(Type.typeof(inValue)){
             case TNull:
                 return null;
@@ -39,6 +37,8 @@ class Cloner {
 
     function handleClass(c:Class<Dynamic>,inValue:Dynamic):Dynamic {
         var name = Type.getClassName(c);
+        if(name == 'Array')
+            return cloneArray(inValue);
         if(name == 'haxe.ds.StringMap')
             return cloneMap(inValue, StringMap);
         else if(name == 'haxe.ds.IntMap')
