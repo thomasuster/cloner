@@ -37,6 +37,8 @@ class Cloner {
 
     function handleClass(c:Class<Dynamic>,inValue:Dynamic):Dynamic {
         var name = Type.getClassName(c);
+        if(name == 'String')
+            return inValue;
         if(name == 'Array')
             return cloneArray(inValue);
         if(name == 'haxe.ds.StringMap')

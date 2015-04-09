@@ -39,6 +39,11 @@ class TestCloner extends haxe.unit.TestCase {
         assertTrue(cloner.clone(value).get(1) == 2);
     }
 
+    @Test
+    public function testString():Void {
+        assertTrue(cloner.clone('a') == 'a');
+    }
+
     public function testClassProperty():Void {
         var value:ClassProperty = new ClassProperty();
         var inValue = new BoolProperty(true);
