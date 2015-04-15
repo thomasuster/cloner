@@ -1,19 +1,16 @@
 package cloner;
 import haxe.ds.ObjectMap;
-import haxe.Serializer;
 import Type.ValueType;
 import haxe.ds.IntMap;
 import haxe.ds.StringMap;
 class Cloner {
 
-    var noArgs:Array<Dynamic>;
     var cache:ObjectMap<Dynamic,Dynamic>;
     var classHandles:Map<String,Dynamic->Dynamic>;
     var stringMapCloner:MapCloner<String>;
     var intMapCloner:MapCloner<Int>;
 
     public function new():Void {
-        noArgs = [];
         stringMapCloner = new MapCloner(this,StringMap);
         intMapCloner = new MapCloner(this,IntMap);
         classHandles = new Map<String,Dynamic->Dynamic>();
