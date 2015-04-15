@@ -4,7 +4,7 @@ import classes.BoolProperty;
 class TestClonerCache extends haxe.unit.TestCase {
 
     var cloner:Cloner;
-    var input:Array<Dynamic>;
+    var input:Array<ClassProperty>;
     var outcome:Array<ClassProperty>;
 
     override public function setup() {

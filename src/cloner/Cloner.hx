@@ -1,4 +1,5 @@
 package cloner;
+import Array;
 import haxe.ds.ObjectMap;
 import Type.ValueType;
 import haxe.ds.IntMap;
@@ -14,24 +15,24 @@ class Cloner {
         stringMapCloner = new MapCloner(this,StringMap);
         intMapCloner = new MapCloner(this,IntMap);
         classHandles = new Map<String,Dynamic->Dynamic>();
-        classHandles.set('String',returnValue);
+        classHandles.set('String',returnString);
         classHandles.set('Array',cloneArray);
         classHandles.set('haxe.ds.StringMap',stringMapCloner.clone);
         classHandles.set('haxe.ds.IntMap',intMapCloner.clone);
     }
 
-    function returnValue(v:Dynamic):Dynamic {
+    function returnString(v:String):String {
         return v;
     }
 
-    public function clone(v:Dynamic):Dynamic {
+    public function clone <T> (v:T):T {
         cache = new ObjectMap<Dynamic,Dynamic>();
-        var outcome:Dynamic = _clone(v);
+        var outcome:T = _clone(v);
         cache = null;
         return outcome;
     }
 
-    public function _clone(v:Dynamic):Dynamic {
+    public function _clone <T> (v:T):T {
         switch(Type.typeof(v)){
             case TNull:
                 return null;
@@ -56,16 +57,15 @@ class Cloner {
         }
     }
 
-    function handleClass(c:Class<Dynamic>,inValue:Dynamic):Dynamic {
-        var handle:Dynamic->Dynamic = classHandles.get(Type.getClassName(c));
+    function handleClass <T> (c:Class<T>,inValue:T):T {
+        var handle:T->T = classHandles.get(Type.getClassName(c));
         if(handle == null)
             handle = cloneClass;
         return handle(inValue);
     }
 
-    function cloneArray(inValue:Array<Dynamic>):Dynamic {
-        var inArray:Array<Dynamic> = inValue;
-        var array:Array<Dynamic> = inArray.copy();
+    function cloneArray <T> (inValue:Array<T>):Array<T> {
+        var array:Array<T> = inValue.copy();
         for (i in 0...array.length)
             array[i] = _clone(array[i]);
         return array;
