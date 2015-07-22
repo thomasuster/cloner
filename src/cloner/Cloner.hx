@@ -17,8 +17,18 @@ class Cloner {
         classHandles = new Map<String,Dynamic->Dynamic>();
         classHandles.set('String',returnString);
         classHandles.set('Array',cloneArray);
-        classHandles.set('haxe.ds.StringMap',stringMapCloner.clone);
-        classHandles.set('haxe.ds.IntMap',intMapCloner.clone);
+        classHandles.set('haxe.ds.StringMap', function(src:StringMap<Dynamic>) {
+            var result = new StringMap<Dynamic>();
+            for(key in src.keys())
+                result.set(key, src.get(key) );
+            return result;
+        } );
+        classHandles.set('haxe.ds.IntMap', function(src:IntMap<Dynamic>) {
+            var result = new IntMap<Dynamic>();
+            for(key in src.keys())
+                result.set(key, src.get(key) );
+            return result;
+        } );
     }
 
     function returnString(v:String):String {
