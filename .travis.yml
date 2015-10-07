@@ -9,4 +9,4 @@ install:
 before_script:
   - cd $TRAVIS_BUILD_DIR
 script:
-  - sh test.sh
+  - sh test.sh -e
