@@ -1,3 +1,4 @@
+set -e
 cd test
 haxe compile.hxml
 cd ..

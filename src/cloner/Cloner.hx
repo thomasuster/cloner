@@ -26,6 +26,8 @@ class Cloner {
     }
 
     public function clone <T> (v:T):T {
+        if(Type.getClassName(cast v) != null)
+            return v;
         cache = new ObjectMap<Dynamic,Dynamic>();
         var outcome:T = _clone(v);
         cache = null;
@@ -43,7 +45,7 @@ class Cloner {
             case TBool:
                 return v;
             case TObject:
-                return v;
+                return handleAnonymous(v);
             case TFunction:
                 return null;
             case TClass(c):
@@ -55,6 +57,16 @@ class Cloner {
             case TUnknown:
                 return null;
         }
+    }
+
+    function handleAnonymous (v:Dynamic):Dynamic {
+        var properties:Array<String> = Reflect.fields(v);
+        var anonymous:Dynamic = {};
+        for (i in 0...properties.length) {
+            var property:String = properties[i];
+            Reflect.setField(anonymous, property, Reflect.getProperty(v, property));
+        }
+        return anonymous;
     }
 
     function handleClass <T> (c:Class<T>,inValue:T):T {

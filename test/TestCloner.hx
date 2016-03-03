@@ -66,4 +66,11 @@ class TestCloner extends haxe.unit.TestCase {
         assertTrue(outValue.property);
         assertFalse(inValue == outValue);
     }
+
+    public function testAnonObjectAreDifferentCopies():Void {
+        var value = { a: 10, b: 20 };
+        var clone = cloner.clone(value);
+        Reflect.setField(value, 'a', 33);
+        assertEquals(10, Reflect.getProperty(clone, 'a'));
+    }
 }
