@@ -26,8 +26,6 @@ class Cloner {
     }
 
     public function clone <T> (v:T):T {
-        if(Type.getClassName(cast v) != null)
-            return v;
         cache = new ObjectMap<Dynamic,Dynamic>();
         var outcome:T = _clone(v);
         cache = null;
@@ -35,6 +33,8 @@ class Cloner {
     }
 
     public function _clone <T> (v:T):T {
+        if(Type.getClassName(cast v) != null)
+            return v;
         switch(Type.typeof(v)){
             case TNull:
                 return null;

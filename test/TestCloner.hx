@@ -1,3 +1,4 @@
+import classes.ClassTypeProperty;
 import classes.ABCEnum;
 import cloner.Cloner;
 import classes.ArrayProperty;
@@ -82,5 +83,12 @@ class TestCloner extends haxe.unit.TestCase {
 
         var cloneInner = Reflect.getProperty(clone, 'inner');
         assertEquals(5, Reflect.getProperty(cloneInner, 'b'));
+    }
+
+    public function testClassRefInsideAnObj():Void {
+        var value:ClassTypeProperty = new ClassTypeProperty();
+        value.property = BoolProperty;
+        var outValue:ClassTypeProperty = cloner.clone(value);
+        assertEquals(outValue.property, BoolProperty);
     }
 }
