@@ -64,7 +64,7 @@ class Cloner {
         var anonymous:Dynamic = {};
         for (i in 0...properties.length) {
             var property:String = properties[i];
-            Reflect.setField(anonymous, property, Reflect.getProperty(v, property));
+            Reflect.setField(anonymous, property, _clone(Reflect.getProperty(v, property)));
         }
         return anonymous;
     }

@@ -73,4 +73,14 @@ class TestCloner extends haxe.unit.TestCase {
         Reflect.setField(value, 'a', 33);
         assertEquals(10, Reflect.getProperty(clone, 'a'));
     }
+
+    public function testEmbededAnonObject():Void {
+        var inner = {b: 5};
+        var value = { a: 10, inner: inner };
+        var clone = cloner.clone(value);
+        Reflect.setField(inner, 'b', 33);
+
+        var cloneInner = Reflect.getProperty(clone, 'inner');
+        assertEquals(5, Reflect.getProperty(cloneInner, 'b'));
+    }
 }
