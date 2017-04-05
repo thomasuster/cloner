@@ -5,7 +5,7 @@ install:
   - cd ..
   - mkdir haxelib
   - haxelib setup haxelib
-  - haxelib install hxcpp 3.1.68 > /dev/null
+  - haxelib install hxcpp > /dev/null
 before_script:
   - cd $TRAVIS_BUILD_DIR
 script:
