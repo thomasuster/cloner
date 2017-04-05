@@ -33,6 +33,10 @@ class Cloner {
     }
 
     public function _clone <T> (v:T):T {
+        #if js
+        if(Std.is(v, String))
+            return v;
+        #end
         if(Type.getClassName(cast v) != null)
             return v;
         switch(Type.typeof(v)){
