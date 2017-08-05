@@ -37,8 +37,16 @@ class Cloner {
         if(Std.is(v, String))
             return v;
         #end
+        
+        #if neko
+        try {
         if(Type.getClassName(cast v) != null)
             return v;
+        }catch(e:Dynamic) {}
+        #else
+        if(Type.getClassName(cast v) != null)
+            return v;
+        #end
         switch(Type.typeof(v)){
             case TNull:
                 return null;

@@ -1,0 +1,33 @@
+version: "{build}"
+
+clone_folder: C:\projects\cloner
+
+environment:
+    global:
+        HAXELIB_ROOT: C:\projects\haxelib
+
+install:
+    # Install haxe and neko
+    - cinst neko -y
+    - cinst haxe -y
+    - RefreshEnv
+    - neko -version
+    - haxe -version
+    # Setup haxelib
+    - mkdir "%HAXELIB_ROOT%"
+    - haxelib setup "%HAXELIB_ROOT%"
+    - haxelib install record-macros
+    - haxelib install hxcpp
+
+build_script:
+    - cd test
+    - haxe compile.hxml
+    - cd ..
+
+test_script:
+    - echo CPP
+    - bin\test\TestMain-debug.exe
+    - echo NEKO
+    - neko bin\test\TestMain.n
+
+
