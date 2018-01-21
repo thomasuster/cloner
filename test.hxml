@@ -1,8 +1,0 @@
--cmd set -e
--cmd cd test
--cmd haxe compile.hxml
--cmd cd ..
--cmd echo CPP
--cmd bin/test/TestMain-debug
--cmd echo NEKO
--cmd neko bin/test/TestMain.n
