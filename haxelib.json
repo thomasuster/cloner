@@ -1,0 +1,13 @@
+{
+  "name": "cloner",
+  "url" : "https://github.com/thomasuster/cloner",
+  "license": "MIT",
+  "tags": ["clone", "copy", "deep"],
+  "description": "A deep copy algorithm for haxe",
+  "version": "1.0.0",
+  "classPath": "src/",
+  "releasenote": "",
+  "contributors": ["thomasuster"],
+  "dependencies": {
+  }
+}
