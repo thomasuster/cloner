@@ -8,7 +8,7 @@ environment:
 
 install:
     # Install haxe and neko
-    - cinst neko -y
+    - cinst neko --version 2.2.0 -y
     - cinst haxe -y
     - RefreshEnv
     - neko -version
