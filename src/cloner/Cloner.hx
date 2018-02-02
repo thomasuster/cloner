@@ -59,7 +59,7 @@ class Cloner {
             case TObject:
                 return handleAnonymous(v);
             case TFunction:
-                return null;
+                return v;
             case TClass(c):
                 if(!cache.exists(v))
                     cache.set(v,handleClass(c, v));
