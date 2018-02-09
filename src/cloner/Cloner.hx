@@ -37,7 +37,7 @@ class Cloner {
         if(Std.is(v, String))
             return v;
         #end
-        
+
         #if neko
         try {
         if(Type.getClassName(cast v) != null)
@@ -100,7 +100,7 @@ class Cloner {
         var fields:Array<String> = Reflect.fields(inValue);
         for (i in 0...fields.length) {
             var field = fields[i];
-            var property = Reflect.getProperty(inValue, field);
+            var property = Reflect.field(inValue, field);
             Reflect.setField(outValue, field, _clone(property));
         }
         return outValue;

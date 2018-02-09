@@ -4,6 +4,7 @@ import cloner.Cloner;
 import classes.ArrayProperty;
 import classes.ClassProperty;
 import classes.BoolProperty;
+import classes.FunctionProperty;
 import classes.NullClass;
 class TestCloner extends haxe.unit.TestCase {
 
@@ -90,5 +91,12 @@ class TestCloner extends haxe.unit.TestCase {
         value.property = BoolProperty;
         var outValue:ClassTypeProperty = cloner.clone(value);
         assertEquals(outValue.property, BoolProperty);
+    }
+
+    public function testFunctionProperty():Void {
+        var value:FunctionProperty = new FunctionProperty();
+        assertTrue(cloner.clone(value).fproperty == value.fproperty);
+        var value = {a:function() { trace(1); }, b:1};
+        assertTrue(cloner.clone(value).a == value.a);
     }
 }
