@@ -1,5 +1,6 @@
 -cp .
 -cp ../src
+-lib hx3compat
 -main TestMain
 -debug
 -cpp ../bin/test
@@ -8,6 +9,7 @@
 
 -cp .
 -cp ../src
+-lib hx3compat
 -main TestMain
 -debug
 -neko ../bin/test/TestMain.n
