@@ -38,7 +38,7 @@ class Cloner {
             return v;
         #end
         
-        #if neko
+        #if (neko||hl)
         try {
         if(Type.getClassName(cast v) != null)
             return v;
